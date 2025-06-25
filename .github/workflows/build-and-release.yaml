@@ -92,6 +92,13 @@ jobs:
           find artifacts -name "*.tar.gz" -exec cp {} release-assets/ \;
           find artifacts -name "*.sha256" -exec cp {} release-assets/ \;
 
+          echo "Decompressing snapshot for verification..."
+          mkdir -p snapshot_content
+          TARBALL=$(find artifacts -name "*.tar.gz")
+          tar -xzf $TARBALL -C snapshot_content
+          echo "Decompressed content:"
+          ls -lR snapshot_content
+
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
         with:
